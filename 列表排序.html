@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="wclassth=device-wclassth, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title></title>
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<script src="./js/vue.min.js"></script>
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	</head>
+	<style type="text/css">
+		button {
+			margin-left:75px;
+		}
+		input{
+			margin-left: 22px;
+		}
+		h2 {
+			text-indent: 150px;
+		}
+		#root{
+			background-color: #fff;
+			width: 100%;
+		}
+		ul,li{
+			text-decoration: none;
+			list-style:none;
+		}
+		.box {
+			width: 350px;
+			height: 40px;
+			padding: 20px 10px 10px 10px;
+			border-radius: 15px;
+			border: 2px solid #808080;
+			background-color: #87CEEB;
+		}
+	</style>
+	<body>
+		<div id="root">
+			<h2>课程安排</h2>
+			<button @click='sortType=2'>时间升序</button>
+			<button @click='sortType=1'>时间降序</button>
+			<br>
+			<input type="text" placeholder="请输入名字" v-model="keyword">
+		    <input type="text" placeholder="请输入日期" v-model="dateword">
+			<ul>
+				<div class="box" v-for="(p,index) of newpersons" :key='p.id'>
+				<!-- v-for渲染每个值 -->
+				<li>
+					<i class="el-icon-user-solid"></i>
+					{{p.class}}号教室--{{p.date1}}号--{{p.name}}
+				</li>
+				</div>
+			</ul>
+		</div>
+
+		<script>
+			//用computed计算属性实现:
+			new Vue({
+				el: '#root',
+				data: {
+					sortType: 0, //0代表原顺序，1代表降序，2代表升序
+					keyword: '',
+					dateword:'',
+					persons: [{
+							id:1,
+							class: '02',
+							name: '文希(家颖)初二数学16-18',
+							date1: 15
+						},
+						{
+							id:2,
+							class: '03',
+							name: '红苍、宜达(小静)生物14-16',
+							date1: 15
+						},
+						{
+							id:3,
+							class: '03',
+							name: '红苍、宜达(家颖)物理16-18',
+							date1: 15
+
+						},
+						{
+							id:4,
+							class: '02',
+							name: '禧薇(朋)初二数学10-12',
+							date1: 16
+						},
+						{
+							id:4100,
+							class: '04',
+							name: '宜达（镒朋）初二语文14-16',
+							date1: 16
+						},
+						{
+							id:5,
+							class: '02',
+							name: '文希(家颖)初二数学16-18',
+							date1: 16
+						},
+						{
+							id:6,
+							class: '01',
+							name: '梓森(镒朋)初三物理16-18',
+							date1: 16
+						},
+						{
+							id:7,
+							class: '03',
+							name: '裕晖(祥威)初三数学16-18',
+							date1: 16
+						},
+						{
+							id:700,
+							class: '04',
+							name: '红苍、宜达（小静）初二生物16-18',
+							date1: 16
+						},
+						{
+							id:9,
+							class: '02',
+							name: '裕晖(小静)初三化学8-10',
+							date1: 17
+						},
+						{
+							id:10,
+							class: '02',
+							name: '裕晖(家颖)初三物理10-12',
+							date1: 17
+						},
+						{
+							id:11,
+							class: '01',
+							name: '靖俞(祥威)初三数学14-16',
+							date1: 17
+						},
+						{
+							id:1111,
+							class: '03',
+							name: '宜达（家颖）初二物理14-16',
+							date1: 17
+						},
+						{
+							id:110,
+							class: '04',
+							name: '梓森（小静）初三化学14-16',
+							date1: 17
+						},
+						{
+							id:111,
+							class: '04',
+							name: '梓森（祥威）初三数学16-18',
+							date1: 17
+						},
+						{
+							id:12,
+							class: '02',
+							name: '文希(家颖)初二数学16-18',
+							date1: 17
+						},
+						{
+							id:13,
+							class: '03',
+							name: '红苍、宜达(小静)生物16-18',
+							date1: 17
+						},
+						{
+							id:15,
+							class: '02',
+							name: '禧薇(朋)初二数学10-12',
+							date1: 18
+						},
+						{
+							id:150,
+							class: '01',
+							name: '梓森（镒朋）初三物理16-18',
+							date1: 18
+						},
+						{
+							id:16,
+							class: '01',
+							name: '靖俞(祥威)初三数学14-16',
+							date1: 18
+						},
+						{
+							id:17,
+							class: '02',
+							name: '文希(家颖)初二数学16-18',
+							date1: 18
+						},
+						{
+							id:170,
+							class: '04',
+							name: '宜达（家颖）物理14-16',
+							date1: 18
+						},
+						{	
+							id:18,
+							class: '03',
+							name: '裕晖(祥威)初三数学16-18',
+							date1: 18
+						},
+						{
+							id:181,
+							class: '04',
+							name: '红苍、宜达（小静）生物16-18',
+							date1: 18
+						},
+						{
+							id:192,
+							class: '03',
+							name: '梓森(祥威)初三数学16-18',
+							date1: 19
+						},
+						{
+							id:191,
+							class: '02',
+							name: '裕晖（小静）初三化学8-10',
+							date1: 19
+						},
+						{
+							id:20,
+							class: '02',
+							name: '裕晖(家颖)初三物理10-12',
+							date1: 19
+						},
+						{
+							id:21,
+							class: '01',
+							name: '靖俞(祥威)初三数学14-16',
+							date1: 19
+						},
+						{
+							id:2111,
+							class: '04',
+							name: '梓森（小静）初三化学14-16',
+							date1: 19
+						},
+						{
+							id:22,
+							class: '02',
+							name: '文希(家颖)初二数学16-18',
+							date1: 19
+						},
+						{
+							id:23,
+							class: '03',
+							name: '红苍、宜达（小静）生物16-18',
+							date1: 19
+						},
+						{
+							id:24,
+							class: '03',
+							name: '宜达（家颖）物理14-16',
+							date1: 19
+						},
+						{
+							id:26,
+							class: '02',
+							name: '禧薇（朋）初二数学8-10',
+							date1: 20
+						},
+						{
+							id:261,
+							class: '02',
+							name: '梓森（镒朋）初三物理16-18',
+							date1: 20
+						},
+						{
+							id:27,
+							class: '04',
+							name: '宜达（镒朋）初二语文14-16',
+							date1: 20
+						},
+						{
+							id:28,
+							class: '01',
+							name: '靖俞（祥威）初三数学14-16',
+							date1: 20
+						},
+						{
+							id:29,
+							class: '02',
+							name: '文希(家颖)初二数学16-18',
+							date1: 20
+						},
+						{
+							id:30,
+							class: '02',
+							name: '红苍、宜达（小静）生物16-18',
+							date1: 20
+						},
+						{
+							id:31,
+							class: '03',
+							name: '裕晖（祥威）初三数学16-18',
+							date1: 20
+						},
+						{
+							id:33,
+							class: '02',
+							name: '裕晖（小静）初三化学8-10',
+							date1: 21
+						},
+						{
+							id:3311,
+							class: '03',
+							name: '韦中、政杰（家颖）高一数学14-16',
+							date1: 21
+						},
+						{
+							id:34,
+							class: '02',
+							name: '裕晖（家颖）初三物理10-12',
+							date1: 21
+						},
+						{
+							id:341,
+							class: '03',
+							name: '梓森（小静）初三化学10-12',
+							date1: 21
+						},
+						{
+							id:35,
+							class: '01',
+							name: '靖俞（祥威）初三数学14-16',
+							date1: 21
+						},
+						{
+							id:36,
+							class: '02',
+							name: '文希（家颖）初二数学16-18',
+							date1: 21
+						},
+						{
+							id:3613,
+							class: '04',
+							name: '宜达（家颖）初二物理14-16',
+							date1: 21
+						},
+						{
+							id:3611,
+							class: '01',
+							name: '梓森（祥威）初三数学8-10',
+							date1: 21
+						},
+						{
+							id:3612,
+							class: '03',
+							name: '红苍、宜达（小静）初二生物16-18',
+							date1: 21
+						},
+						{
+							id:3614,
+							class: '03',
+							name: '韦中（镒朋）高一物理16-18',
+							date1: 21
+						},
+						{
+							id:371,
+							class: '02',
+							name: '韦中（镒朋）高一物理8-10',
+							date1: 22
+						},
+						{
+							id:37,
+							class: '02',
+							name: '禧薇（朋）初二数学10-12',
+							date1: 22
+						},
+						{
+							id:38,
+							class: '03',
+							name: '韦中、政杰（家颖）高一数学10-12',
+							date1: 22
+						},
+						{
+							id:39,
+							class: '01',
+							name: '靖俞（祥威）初三数学14-16',
+							date1: 22
+						},
+						{
+							id:40,
+							class: '02',
+							name: '文希（家颖）初二数学16-18',
+							date1: 22
+						},
+						{
+							id:401,
+							class: '04',
+							name: '红苍、宜达（小静）生物16-18',
+							date1: 22
+						},
+						{
+							id:402,
+							class: '04',
+							name: '宜达（镒朋）语文14-16',
+							date1: 22
+						},
+						{
+							id:41,
+							class: '03',
+							name: '裕晖（祥威）初三数学16-18',
+							date1: 22
+						},
+						{
+							id:411,
+							class: '01',
+							name: '梓森（镒朋）初三物理16-18',
+							date1: 22
+						},
+						{
+							id:413,
+							class: '03',
+							name: '梓森（小静）初三化学10-12',
+							date1: 23
+						},
+						{
+							id:4132,
+							class: '02',
+							name: '裕晖（小静）初三化学8-10',
+							date1: 23
+						},
+						{
+							id:419,
+							class: '03',
+							name: '梓森（祥威）初三数学8-10',
+							date1: 23
+						},
+						{
+							id:42,
+							class: '02',
+							name: '裕晖（家颖）初三物理10-12',
+							date1: 23
+						},
+						{
+							id:43,
+							class: '01',
+							name: '靖俞（祥威）初三数学14-16',
+							date1: 23
+						},
+						{
+							id:44,
+							class: '02',
+							name: '文希（家颖）初二数学16-18',
+							date1: 23
+						},
+						{
+							id:45,
+							class: '02',
+							name: '韦中、政杰（家颖）高一数学14-16',
+							date1: 23
+						},
+						{
+							id:46,
+							class: '04',
+							name: '红苍、宜达（小静）生物16-18',
+							date1: 23
+						},
+						{
+							id:4611,
+							class: '03',
+							name: '韦中（镒朋）高一物理14-16',
+							date1: 23
+						},
+						{
+							id:47,
+							class: '04',
+							name: '宜达（家颖）物理14-16',
+							date1: 23
+						},
+						{
+							id:471,
+							class: '02',
+							name: '禧薇（镒朋）初二数学10-12',
+							date1: 24
+						},
+						{
+							id:4731,
+							class: '03',
+							name: '韦中（镒朋）高一物理8-10',
+							date1: 24
+						},
+						{
+							id:473,
+							class: '03',
+							name: '韦中、政杰（家颖）高一数学10-12',
+							date1: 24
+						},
+						{
+							id:49,
+							class: '01',
+							name: '靖俞（祥威）初三数学8-10',
+							date1: 24
+						},
+						{
+							id:491,
+							class: '02',
+							name: '宜达（镒朋）初二语文14-16',
+							date1: 24
+						},
+						{
+							id:50,
+							class: '02',
+							name: '梓森（镒朋）初三物理16-18',
+							date1: 24
+						},
+						{
+							id:52,
+							class: '02',
+							name: '红苍、宜达（小静）初二生物16-18',
+							date1: 24
+						},
+						{
+							id:53,
+							class: '03',
+							name: '裕晖（祥威）初三数学16-18',
+							date1: 24
+						},
+						{
+							id:54,
+							class: '02',
+							name: '裕晖（小静）初三化学8-10',
+							date1: 25
+						},
+						{
+							id:55,
+							class: '03',
+							name: '梓森（祥威）初三数学8-10',
+							date1: 25
+						},
+						{
+							id:56,
+							class: '02',
+							name: '裕晖（家颖）初三物理10-12',
+							date1: 25
+						},
+						{
+							id:57,
+							class: '03',
+							name: '梓森（小静）初三化学10-12',
+							date1: 25
+						},
+						{
+							id:58,
+							class: '01',
+							name: '靖俞（祥威）初三数学14-16',
+							date1: 25
+						},
+						{
+							id:59,
+							class: '03',
+							name: '韦中、政杰（家颖）高一数学14-16',
+							date1: 25
+						},
+						{
+							id:60,
+							class: '04',
+							name: '红苍、宜达（小静）生物16-18',
+							date1: 25
+						},
+						{
+							id:61,
+							class: '04',
+							name: '宜达（家颖）物理14-16',
+							date1: 25
+						},
+						{
+							id:6211,
+							class: '03',
+							name: '韦中（镒朋）高一物理8-10',
+							date1: 26
+						},
+						{
+							id:62,
+							class: '02',
+							name: '禧薇（镒朋）初二数学10-12',
+							date1: 26
+						},
+						{
+							id:63,
+							class: '03',
+							name: '韦中、政杰（家颖）高一数学10-12',
+							date1: 26
+						},
+						{
+							id:64,
+							class: '01',
+							name: '靖俞（祥威）初三数学14-16',
+							date1: 26
+						},
+						{
+							id:641,
+							class: '04',
+							name: '宜达（镒朋）初二语文14-16',
+							date1: 26
+						},
+						{
+							id:65,
+							class: '01',
+							name: '红苍、宜达（小静）生物16-18',
+							date1: 26
+						},
+						{
+							id:66,
+							class: '01',
+							name: '梓森（镒朋）初三物理16-18',
+							date1: 26
+						},
+						{
+							id:67,
+							class: '03',
+							name: '裕晖（祥威）初三数学16-18',
+							date1: 26
+						},
+						{
+							id:69,
+							class: '01',
+							name: '裕晖（小静）初三化学8-10',
+							date1: 27
+						},
+						{
+							id:71,
+							class: '03',
+							name: '梓森（祥威）初三数学8-10',
+							date1: 27
+						},
+						{
+							id:72,
+							class: '01',
+							name: '裕晖（家颖）初三物理10-12',
+							date1: 27
+						},
+						{
+							id:74,
+							class: '03',
+							name: '梓森（小静）初三化学10-12',
+							date1: 27
+						},
+						{
+							id:75,
+							class: '01',
+							name: '靖俞（祥威）初三数学14-16',
+							date1: 27
+						},
+						{
+							id:76,
+							class: '03',
+							name: '韦中、政杰（家颖）高一数学14-16',
+							date1: 27
+						},
+						{
+							id:77,
+							class: '03',
+							name: '韦中（镒朋）高一物理8-10',
+							date1: 28
+						},
+						{
+							id:771,
+							class: '02',
+							name: '禧薇（镒朋）初二数学10-12',
+							date1: 28
+						},
+						{
+							id:78,
+							class: '03',
+							name: '韦中、政杰（家颖）高一数学10-12',
+							date1: 28
+						},
+						{
+							id:79,
+							class: '01',
+							name: '靖俞（祥威）初三数学14-16',
+							date1: 28
+						},
+						{
+							id:80,
+							class: '01',
+							name: '梓森（镒朋）初三物理16-18',
+							date1: 28
+						},
+						{
+							id:81,
+							class: '03',
+							name: '裕晖（祥威）初三数学16-18',
+							date1: 28
+						},
+						{
+							id:82,
+							class: '02',
+							name: '裕晖（小静）初三化学8-10',
+							date1: 29
+						},
+						{
+							id:822,
+							class: '03',
+							name: '梓森（祥威）初三数学8-10',
+							date1: 29
+						},
+						{
+							id:83,
+							class: '02',
+							name: '裕晖（家颖）初三物理10-12',
+							date1: 29
+						},
+						{
+							id:84,
+							class: '03',
+							name: '梓森（小静）初三化学10-12',
+							date1: 29
+						},
+						{
+							id:85,
+							class: '01',
+							name: '靖俞（祥威）初三数学14-16',
+							date1: 29
+						},
+						{
+							id:86,
+							class: '03',
+							name: '韦中、政杰（家颖）高一数学14-16',
+							date1: 29
+						},
+						{
+							id:87,
+							class: '03',
+							name: '韦中（镒朋）高一物理16-18',
+							date1: 29
+						}
+						
+					]
+				},
+				computed: {
+					newpersons() {
+						const arr=this.persons.filter((p)=>{
+							if(this.dateword==''){
+								return p.name.indexOf(this.keyword) != -1
+							}
+							else {
+								return p.date1==this.dateword && p.name.indexOf(this.keyword) != -1
+							}
+						})
+						// const arr = this.persons.filter((p) => {
+						//        return p.name.indexOf(this.keyword) != -1 //return是过滤出来的东西
+						//       })
+						//判断是否需要排序
+						if (this.sortType) {
+							arr.sort((p1, p2) => { //前-后是升序
+								return this.sortType == 1 ? p2.date1 - p1.date1 : p1.date1 - p2.date1
+							})
+						}
+						return arr
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
